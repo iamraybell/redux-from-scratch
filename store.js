@@ -25,4 +25,3 @@ const createStore = (reducer)=>{
         dispatch,
     }
 }
-module.exports = createStore;

@@ -1,5 +1,5 @@
-const createStore = require('./store');
 
+///todos reducer
 function todos(state = [], action){
 
     switch (action.type){
@@ -20,53 +20,32 @@ function todos(state = [], action){
     }
 };
 
+
+function goals(state = [], action){
+
+    switch (action.type){
+        case 'ADD_GOAL':
+            return state.concat([action.payload])
+        case 'REMOVE_GOAL':
+            return state.filter((goal)=>{
+                return goal.id !== action.payload.id;
+            })
+        default:
+            return state;
+    }
+};
+
+const rootReducer = (state={}, action) =>{
+    return {
+        goals: goals(state.goals, action),
+        todos: todos(state.todos, action),
+    }
+}
 //this creates are store.
 
 
-const store = createStore(todos);
+const store = createStore(rootReducer);
 let unSub1 =  store.subscribe(()=>{
     console.log('im sub1');
 });
 
-store.dispatch({
-    type: 'ADD_TODO',
-    payload:{
-        id:0,
-        name:'read a book',
-        complete: false,
-    }
-});
-
-store.dispatch({
-    type: 'ADD_TODO',
-    payload:{
-        id:1,
-        name:'sleep',
-        complete: true,
-    }
-});
-
-store.dispatch({
-    type: 'ADD_TODO',
-    payload:{
-        id:2,
-        name:'cry',
-        complete: true,
-    }
-});
-
-store.dispatch({
-    type: 'REMOVE_TODO',
-    payload:{
-        id:1,
-    }
-});
-
-store.dispatch({
-    type: 'UPDATE_TODO',
-    payload:{
-        id:2,
-        name:'Be happy',
-        complete: false,
-    }
-})
