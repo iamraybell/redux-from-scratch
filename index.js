@@ -6,20 +6,15 @@ function todos(state = [], action){
         case 'ADD_TODO':
             return state.concat([action.payload])
         case 'REMOVE_TODO':
+            console.log(action.payload.id)
             return state.filter((todo)=>{
-                return todo.id !== action.payload.id;
+                return parseInt(todo.id) !== parseInt(action.payload.id);
             })
-        case 'UPDATE_TODO':
-            return state.map((todo)=>{
-                return (todo.id === action.payload.id) ? 
-                {...action.payload}: 
-                todo;
-        })
+
         default:
             return state;
     }
 };
-
 
 function goals(state = [], action){
 
@@ -28,7 +23,7 @@ function goals(state = [], action){
             return state.concat([action.payload])
         case 'REMOVE_GOAL':
             return state.filter((goal)=>{
-                return goal.id !== action.payload.id;
+                return parseInt(goal.id) !== parseInt(action.payload.id)
             })
         default:
             return state;
@@ -43,9 +38,6 @@ const rootReducer = (state={}, action) =>{
 }
 //this creates are store.
 
-
 const store = createStore(rootReducer);
-let unSub1 =  store.subscribe(()=>{
-    console.log('im sub1');
-});
+
 

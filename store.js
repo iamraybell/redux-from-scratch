@@ -13,7 +13,6 @@ const createStore = (reducer)=>{
 
      const dispatch = (action) => {
         state = reducer(state, action);
-        console.log(state)
         listeners.forEach((listener)=>{
             listener();
         })
